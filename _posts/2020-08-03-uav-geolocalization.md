@@ -104,4 +104,4 @@ The examples on which the model fails are very confusing even to human eye. The 
 Dual networks are superior to siamese networks when the data comes from 2 specific distributions, our model has the ability to correctly predict same scene or not 9 times out of 10.
 
 ## Detailed Report
-You can read the entire report by downloading it [here](https://github.com/abhinavtripathi95/geolocalization/raw/master/assets/thesis.pdf).
+You can read the entire report by downloading it [here](https://github.com/abhinavtripathi95/geolocalization/raw/master/assets/thesis.pdf). You may also view the code on the [project repository](https://github.com/abhinavtripathi95/geolocalization).
