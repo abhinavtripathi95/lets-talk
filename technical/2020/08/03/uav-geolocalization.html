@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>UAV Geolocalization Using Satellite Imagery | Let’s Talk</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="UAV Geolocalization Using Satellite Imagery" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Locating drones just by using cameras and satellite images" />
+<meta property="og:description" content="Locating drones just by using cameras and satellite images" />
+<link rel="canonical" href="https://abhinavtripathi95.github.io/lets-talk/technical/2020/08/03/uav-geolocalization.html" />
+<meta property="og:url" content="https://abhinavtripathi95.github.io/lets-talk/technical/2020/08/03/uav-geolocalization.html" />
+<meta property="og:site_name" content="Let’s Talk" />
+<meta property="og:image" content="https://abhinavtripathi95.github.io/lets-talk/images/uav-geolocalization/intro-small.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-03T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Locating drones just by using cameras and satellite images","@type":"BlogPosting","headline":"UAV Geolocalization Using Satellite Imagery","dateModified":"2020-08-03T00:00:00-05:00","datePublished":"2020-08-03T00:00:00-05:00","image":"https://abhinavtripathi95.github.io/lets-talk/images/uav-geolocalization/intro-small.png","url":"https://abhinavtripathi95.github.io/lets-talk/technical/2020/08/03/uav-geolocalization.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://abhinavtripathi95.github.io/lets-talk/technical/2020/08/03/uav-geolocalization.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/lets-talk/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://abhinavtripathi95.github.io/lets-talk/feed.xml" title="Let's Talk" /><link rel="shortcut icon" type="image/x-icon" href="/lets-talk/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>UAV Geolocalization Using Satellite Imagery | Let’s Talk</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="UAV Geolocalization Using Satellite Imagery" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Locating drones just by using cameras and satellite images" />
+<meta property="og:description" content="Locating drones just by using cameras and satellite images" />
+<link rel="canonical" href="https://abhinavtripathi95.github.io/lets-talk/technical/2020/08/03/uav-geolocalization.html" />
+<meta property="og:url" content="https://abhinavtripathi95.github.io/lets-talk/technical/2020/08/03/uav-geolocalization.html" />
+<meta property="og:site_name" content="Let’s Talk" />
+<meta property="og:image" content="https://abhinavtripathi95.github.io/lets-talk/images/uav-geolocalization/intro-small.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-03T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Locating drones just by using cameras and satellite images","@type":"BlogPosting","headline":"UAV Geolocalization Using Satellite Imagery","dateModified":"2020-08-03T00:00:00-05:00","datePublished":"2020-08-03T00:00:00-05:00","image":"https://abhinavtripathi95.github.io/lets-talk/images/uav-geolocalization/intro-small.png","url":"https://abhinavtripathi95.github.io/lets-talk/technical/2020/08/03/uav-geolocalization.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://abhinavtripathi95.github.io/lets-talk/technical/2020/08/03/uav-geolocalization.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://abhinavtripathi95.github.io/lets-talk/feed.xml" title="Let's Talk" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/lets-talk/">Let&#39;s Talk</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/lets-talk/about/">About Me</a><a class="page-link" href="/lets-talk/search/">Search</a><a class="page-link" href="/lets-talk/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">UAV Geolocalization Using Satellite Imagery</h1><p class="page-description">Locating drones just by using cameras and satellite images</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-03T00:00:00-05:00" itemprop="datePublished">
+        Aug 3, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/lets-talk/categories/#technical">technical</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#motivation">Motivation</a></li>
+<li class="toc-entry toc-h2"><a href="#geolocalization-as-an-image-matching-problem">Geolocalization as an Image Matching Problem</a></li>
+<li class="toc-entry toc-h2"><a href="#aerial-cities-dataset">Aerial Cities Dataset</a></li>
+<li class="toc-entry toc-h2"><a href="#approach">Approach</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#siamese-vs-dual-network">Siamese vs Dual Network</a></li>
+<li class="toc-entry toc-h3"><a href="#contrastive-loss-function">Contrastive Loss Function</a></li>
+<li class="toc-entry toc-h3"><a href="#training">Training</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#results">Results</a></li>
+<li class="toc-entry toc-h2"><a href="#examples-of-correct-predictions">Examples of Correct Predictions</a></li>
+<li class="toc-entry toc-h2"><a href="#examples-of-incorrect-predictions">Examples of Incorrect Predictions</a></li>
+<li class="toc-entry toc-h2"><a href="#conclusions">Conclusions</a></li>
+<li class="toc-entry toc-h2"><a href="#detailed-report">Detailed Report</a></li>
+</ul><!-- # UAV Geolocalization Using Satellite Imagery -->
+<p>This post discusses the work I have done as a Masters Project at 
+IIT Kanpur.</p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/intro-small.png" alt="intro" title="Can we find out the location of the UAV by matching the images from UAV with the available satellite imagery?"></p>
+
+<h2 id="motivation">
+<a class="anchor" href="#motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Motivation</h2>
+<p>Recent advances in research in the field of unmanned aerial vehicles or UAVs have made them publicly accessible and relatively inexpensive. For most outdoor applications, UAVs generally rely on GPS to get a global pose estimate. However, for accurate geolocalization using GPS, the UAV must be able to receive a direct line of sight from four or more GPS satellites. This can be an issue in case of presence of high buildings, mountains or jammers which can obstruct the signals from satellites. So can we infer the global pose of the UAV without GPS? The answer is yes, we can use the camera sensors attached under the UAV to 
+compare the scene with satellite images, and infer the location of the UAV.</p>
+
+<h2 id="geolocalization-as-an-image-matching-problem">
+<a class="anchor" href="#geolocalization-as-an-image-matching-problem" aria-hidden="true"><span class="octicon octicon-link"></span></a>Geolocalization as an Image Matching Problem</h2>
+<p>Consider a scenario where you have a database of satellite images annotated with their locations. By accurately matching an image from UAV camera with the database, one can get a good approximation of the latitude and longitude of the UAV.</p>
+
+<p>In order to retrieve similar images from the satellite database, we must be able to accurately match satellite images with the UAV camera feed. So, <strong>in this work, we constrain ourselves to the problem of aerial image matching</strong> and train a deep learning model that can accurately match images from satellite and UAV camera.</p>
+
+<h2 id="aerial-cities-dataset">
+<a class="anchor" href="#aerial-cities-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aerial Cities Dataset</h2>
+
+<p>In this work, we use the dataset introduced by <a href="http://web.stanford.edu/~gracegao/publications/conference/2019_ICRA_AkshayShetty_DeepLearningAerialImageNavigation.pdf">this paper</a>. This dataset is referred to as Aerial Cities hereafter.</p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/uav-sat-pairs.gif" alt="dataset" title="Left: UAV Image, Right: Satellite Image"></p>
+
+<p>The UAV images are captured from Google Earth, and the satellite images are captured from Google Maps. The satellite images are always oriented towards the North (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>0</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">0^\circ</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.674115em;vertical-align:0em;"></span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.674115em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span></span></span></span> heading), and the images are taken from the camera facing the nadir. The UAV images have a random heading (between <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>0</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">0^\circ</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.674115em;vertical-align:0em;"></span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.674115em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>36</mn><msup><mn>0</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">360^\circ</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.674115em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">6</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.674115em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span></span></span></span> ) and a random tilt from nadir (between <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>0</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">0^\circ</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.674115em;vertical-align:0em;"></span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.674115em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><msup><mn>5</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">45^\circ</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.674115em;vertical-align:0em;"></span><span class="mord">4</span><span class="mord"><span class="mord">5</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.674115em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span></span></span></span> ). The UAV images have been taken from an altitude between <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mi>m</mi></mrow><annotation encoding="application/x-tex">100m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathdefault">m</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>200</mn><mi>m</mi></mrow><annotation encoding="application/x-tex">200m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathdefault">m</span></span></span></span> above the ground. The satellite images have been taken from an altitude of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>300</mn><mi>m</mi></mrow><annotation encoding="application/x-tex">300m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathdefault">m</span></span></span></span> above the ground.</p>
+
+<h2 id="approach">
+<a class="anchor" href="#approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approach</h2>
+
+<h3 id="siamese-vs-dual-network">
+<a class="anchor" href="#siamese-vs-dual-network" aria-hidden="true"><span class="octicon octicon-link"></span></a>Siamese vs Dual Network</h3>
+<p>In a siamese network, weights are shared between the two branches of the network. A dual network is simply a siamese network with unshared weights.</p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/siam-dual.png" alt="siamese-dual" title="For a siamese network, images to be matched should be from same distribution. But for a dual network, the images may be from different distributions"></p>
+
+<p>Dual network has twice the number of parameters as compared to a siamese network with the same backbone. It has a separate feature extractor for each image distribution (eg, we have images from two distributions: UAV and satellite), which allows the network to learn richer features for each of the distribution.</p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/dual-arch.png" alt="dualnet" title="Dual Network Architecture"></p>
+
+<p>In this work, we found out that for this particular problem, a dual network works better than a siamese network. For training the network, we used contrastive loss function.</p>
+
+<h3 id="contrastive-loss-function">
+<a class="anchor" href="#contrastive-loss-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contrastive Loss Function</h3>
+
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mi>l</mi><mo>×</mo><msup><mi>d</mi><mn>2</mn></msup><mo>+</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>l</mi><mo stretchy="false">)</mo><mo>×</mo><mo stretchy="false">(</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>m</mi><mo>−</mo><mi>d</mi><mo stretchy="false">)</mo><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">L = l \times d^2 + (1-l) \times (\max (0, m-d))^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span>
+
+<p>where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span></span></span></span> is the loss function, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi></mrow><annotation encoding="application/x-tex">l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span> is the label (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> for matching pairs, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">l=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> for non-matching pairs), <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> is the margin and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span> is the distance between image features, which is the output of the network.</p>
+
+<p>For matching images, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo>=</mo><mn>1</mn><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext><mi>L</mi><mo>=</mo><msup><mi>d</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">l=1 \implies L = d^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66844em;vertical-align:-0.024em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⟹</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>.<br>
+For non-matching images, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo>=</mo><mn>0</mn><mtext>  </mtext><mo>⟹</mo><mtext>  </mtext><mi>L</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">l=0 \implies L = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66844em;vertical-align:-0.024em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⟹</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> if distance is greater than the margin. However, if the distance is less than the margin, the loss is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mo stretchy="false">(</mo><mi>m</mi><mo>−</mo><mi>d</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">L=(m-d)^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>.</p>
+
+<p>For our experiments, we set <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">m=100</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span></span></span></span>.</p>
+
+<h3 id="training">
+<a class="anchor" href="#training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training</h3>
+
+<p>We follow the 5 step approach given below to train our networks.</p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/train-small.png" alt="train-approach" title="5 step approach to handle large datasets"></p>
+
+<ol>
+  <li>Creating a small representative dataset allows us to test some of our approaches quickly and identify the methods which will work well. For example, during our experiments we found out that a network pretrained with imagenet weights train much more quickly as opposed to the uninitialized one (read Kaiming Normal).</li>
+  <li>Overfitting serves as a sanity check and demonstrates that our network is actually learning from out training set. It shows that the chosen strategy is good enough for our task.</li>
+  <li>Overfitting can bee easily reduced by using more data, using data augmentation techniques and adding regularization.</li>
+  <li>As we are using transfer learning, some tweaks like discriminative layer training and gradual unfreezing can make sure that the initial layers which can identify fundamental features like blobs, corners, colour gradients and simple patterns are not disturbed while training.</li>
+  <li>After finalizing the strategy we are ready to train on the entire dataset.</li>
+</ol>
+
+<p>In order to read more about the experiments, download the report project at the end of this post.</p>
+
+<h2 id="results">
+<a class="anchor" href="#results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results</h2>
+
+<p>Our experiments show that the dual network performs slightly better than siamese network. The reason behind it is that the dual network architecture can learn from two specific distributions. The first diagram below corresponds to siamese network, while the second one corresponds to dual network.</p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/results-siam.png" alt="results-siam" title="**Siamese Network** gets an accuracy of 0.85"></p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/results-dual.png" alt="results-dual" title="**Dual Network** gets an accuracy of 0.89"></p>
+
+<h2 id="examples-of-correct-predictions">
+<a class="anchor" href="#examples-of-correct-predictions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples of Correct Predictions</h2>
+<p>The figure below shows a true positive: the matching pair which was actually predicted as matching. While testing, if the output distance comes out to be less than 50, we call the pair matching. This is because during training, we set the margin <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">m=100</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span></span></span></span>.</p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/true-positive.png" alt="true-positive" title="True Positive: Left image in the pair corresponds to UAV image, while the right image in the pair corresponds to satellite image."></p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/true-negative.png" alt="true-negative" title="True Negative: Non-matching pair correctly precticted by our model"></p>
+
+<p>Looking at the images above, one can clearly notice that predicting whether two images are of the same geographic scene is not a trivial task.</p>
+
+<h2 id="examples-of-incorrect-predictions">
+<a class="anchor" href="#examples-of-incorrect-predictions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples of Incorrect Predictions</h2>
+
+<p><img src="/lets-talk/images/uav-geolocalization/false-negative.png" alt="false-negative" title="Matching pair wrongly predicted as non-matching"></p>
+
+<p>The model predicts the first example as non-matching. However, it is actually a matching pair. (False Negative)</p>
+
+<p><img src="/lets-talk/images/uav-geolocalization/false-positive.png" alt="false-positive" title="Non-matching pair wrongly predicted as matching"></p>
+
+<p>This is a very hard example. The model predicts this second example as matching. However, it is actually a non-matching pair. (False Positive)</p>
+
+<h2 id="conclusions">
+<a class="anchor" href="#conclusions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusions</h2>
+<p>The examples on which the model fails are very confusing even to human eye. The model gets confused when:</p>
+<ul>
+  <li>the major portion of a UAV image is covered with a single structure</li>
+  <li>there is a lot of greenery or repeated city structures in the images</li>
+</ul>
+
+<p>Dual networks are superior to siamese networks when the data comes from 2 specific distributions, our model has the ability to correctly predict same scene or not 9 times out of 10.</p>
+
+<h2 id="detailed-report">
+<a class="anchor" href="#detailed-report" aria-hidden="true"><span class="octicon octicon-link"></span></a>Detailed Report</h2>
+<p>You can read the entire report by downloading it <a href="https://github.com/abhinavtripathi95/geolocalization/raw/master/assets/thesis.pdf">here</a>.</p>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="abhinavtripathi95/lets-talk"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/lets-talk/technical/2020/08/03/uav-geolocalization.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/lets-talk/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/lets-talk/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/lets-talk/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/abhinavtripathi95" title="abhinavtripathi95"><svg class="svg-icon grey"><use xlink:href="/lets-talk/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/abhinavtripathi95" title="abhinavtripathi95"><svg class="svg-icon grey"><use xlink:href="/lets-talk/assets/minima-social-icons.svg#linkedin"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
